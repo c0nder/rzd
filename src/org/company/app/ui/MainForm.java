@@ -19,7 +19,7 @@ public class MainForm extends BaseForm {
     private final ScheduleEntityManager scheduleEntityManager = Application.getScheduleEntityManager();
 
     private final String[] tableColumns = new String[] {
-            "asdasd", "asdasd", "asdasd", "asdasd"
+            "№", "Departure date", "Arrival date", "Train", "Departure station", "Destination station", "Train type"
     };
 
     public MainForm() {
@@ -32,7 +32,7 @@ public class MainForm extends BaseForm {
 
     private void initTable() {
         TableSchedule.getTableHeader().setReorderingAllowed(false);
-        TableSchedule.setRowHeight(128);
+        TableSchedule.setRowHeight(28);
 
         try {
             CustomTableModel<ScheduleEntity> model = new CustomTableModel<>(
