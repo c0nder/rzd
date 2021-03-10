@@ -17,6 +17,7 @@ public class Application {
     private static final StationEntityManager stationEntityManager = new StationEntityManager(database);
     private static final ScheduleEntityManager scheduleEntityManager = new ScheduleEntityManager(database);
     private static final UserEntityManager userEntityManager = new UserEntityManager(database);
+    private static final UserTicketEntityManager userTicketEntityManager = new UserTicketEntityManager(database);
     private static final TrainTypeEntityManager trainTypeEntityManager = new TrainTypeEntityManager(database);
     private static final CityEntityManager cityEntityManager = new CityEntityManager(database);
     private static final CarEntityManager carEntityManager = new CarEntityManager(database);
@@ -64,6 +65,10 @@ public class Application {
 
     public static SeatEntityManager getSeatEntityManager() {
         return seatEntityManager;
+    }
+
+    public static UserTicketEntityManager getUserTicketEntityManager() {
+        return userTicketEntityManager;
     }
 
     public static Registry getContainer() {
