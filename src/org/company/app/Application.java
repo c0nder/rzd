@@ -16,6 +16,7 @@ public class Application {
     private static final TrainEntityManager trainEntityManager = new TrainEntityManager(database);
     private static final StationEntityManager stationEntityManager = new StationEntityManager(database);
     private static final ScheduleEntityManager scheduleEntityManager = new ScheduleEntityManager(database);
+    private static final UserEntityManager userEntityManager = new UserEntityManager(database);
 
     public static final Registry container = Registry.getInstance();
 
@@ -43,6 +44,10 @@ public class Application {
 
     public static StationEntityManager getStationEntityManager() {
         return stationEntityManager;
+    }
+
+    public static UserEntityManager getUserEntityManager() {
+        return userEntityManager;
     }
 
     public static Registry getContainer() {

@@ -16,7 +16,7 @@ public class MainForm extends BaseForm {
     private JButton ButtonSignIn;
     private JTable TableSchedule;
 
-    private final ScheduleEntityManager scheduleEntityManager = Application.getInstance().getScheduleEntityManager();
+    private final ScheduleEntityManager scheduleEntityManager = Application.getScheduleEntityManager();
 
     private final String[] tableColumns = new String[] {
             "asdasd", "asdasd", "asdasd", "asdasd"
@@ -27,7 +27,7 @@ public class MainForm extends BaseForm {
         setVisible(true);
 
         initTable();
-
+        initButtons();
     }
 
     private void initTable() {
@@ -48,7 +48,11 @@ public class MainForm extends BaseForm {
     }
 
     private void initButtons() {
+        ButtonSignIn.addActionListener(e -> {
+            setVisible(false);
 
+            new FormSignIn(this);
+        });
     }
 
     @Override

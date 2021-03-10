@@ -56,4 +56,29 @@ public class UserEntityManager {
 
         return null;
     }
+
+    public UserEntity getByEmailAndPassword(String email, String password) throws SQLException {
+        try(Connection connection = database.getConnection()) {
+            String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new UserEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("passport"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getBoolean("is_admin")
+                );
+            }
+        }
+
+        return null;
+    }
 }
