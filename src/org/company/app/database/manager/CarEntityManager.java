@@ -2,9 +2,12 @@ package org.company.app.database.manager;
 
 import org.company.app.Application;
 import org.company.app.database.entity.CarEntity;
+import org.company.app.database.entity.ScheduleEntity;
 import org.company.app.util.MysqlDatabase;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarEntityManager {
     private final MysqlDatabase database;
@@ -50,5 +53,32 @@ public class CarEntityManager {
         }
 
         return null;
+    }
+
+    public List<CarEntity> getByScheduleId(int scheduleID) throws SQLException {
+        try (Connection connection = database.getConnection()) {
+            String sql = "SELECT * FROM car WHERE schedule_id = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, scheduleID);
+
+
+
+            List<CarEntity> cars = new ArrayList<>();
+
+            ResultSet resultSet = ps.executeQuery();
+            while(resultSet.next()) {
+                cars.add(new CarEntity(
+                                resultSet.getInt("id"),
+                                resultSet.getInt("capacity"),
+                                resultSet.getInt("schedule_id"),
+                                resultSet.getInt("number")
+                        )
+                );
+            }
+            return cars;
+}
+
+
     }
 }

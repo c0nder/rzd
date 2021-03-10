@@ -30,9 +30,9 @@ public class FormSignUp extends BaseSubForm<FormSignIn> {
         ButtonCancel.addActionListener(e -> {
             closeSubForm();
         });
-
-
     }
+
+
 
     @Override
     public int getFormWidth() {

@@ -7,15 +7,16 @@ import org.company.app.database.manager.ScheduleEntityManager;
 import org.company.app.database.manager.UserEntityManager;
 import org.company.app.util.BaseForm;
 import org.company.app.util.CustomTableModel;
-
+import java.awt.event.*;
 import javax.swing.*;
+
 import java.sql.SQLException;
 
 public class MainForm extends BaseForm {
     private JPanel MainPanel;
     private JButton ButtonSignIn;
     private JTable TableSchedule;
-
+    private FormScheduleDetails formScheduleDetails;
     private final ScheduleEntityManager scheduleEntityManager = Application.getScheduleEntityManager();
 
     private final String[] tableColumns = new String[] {
@@ -45,6 +46,26 @@ public class MainForm extends BaseForm {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        TableSchedule.setFocusable(false);
+        TableSchedule.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    JTable target = (JTable)me.getSource();
+                    showFormScheduleDetails(target);
+                }
+            }
+        });
+    }
+
+    private void showFormScheduleDetails(JTable target) {
+        // to detect double click events
+        setVisible(false);
+        int row = target.getSelectedRow(); // select a row
+        FormScheduleDetails formScheduleDetails = new FormScheduleDetails(this);
+        formScheduleDetails.init((Integer) TableSchedule.getModel().getValueAt(row, 0));
+//                    int column = target.getSelectedColumn(); // select a column
+//                    JOptionPane.showMessageDialog(null, TableSchedule.getValueAt(row, )); // get the value of a row and column.
     }
 
     private void initButtons() {

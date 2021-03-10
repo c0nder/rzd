@@ -1,9 +1,12 @@
 package org.company.app.database.manager;
 
+import org.company.app.database.entity.CarEntity;
 import org.company.app.database.entity.SeatEntity;
 import org.company.app.util.MysqlDatabase;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeatEntityManager {
     private final MysqlDatabase database;
@@ -50,4 +53,31 @@ public class SeatEntityManager {
 
         return null;
     }
+
+    public List<SeatEntity> getByCarId(int carID) throws SQLException {
+        try (Connection connection = database.getConnection()) {
+            String sql = "SELECT * FROM seat WHERE car_id = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, carID);
+
+
+
+            List<SeatEntity> seats = new ArrayList<>();
+
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                seats.add(new SeatEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("car_id"),
+                        resultSet.getInt("number"),
+                        resultSet.getInt("price")
+                ));
+            }
+            return seats;
+        }
+
+
+    }
+
 }
