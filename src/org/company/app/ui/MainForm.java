@@ -3,10 +3,13 @@ package org.company.app.ui;
 import com.mysql.cj.xdevapi.Table;
 import org.company.app.Application;
 import org.company.app.database.entity.ScheduleEntity;
+import org.company.app.database.entity.UserEntity;
 import org.company.app.database.manager.ScheduleEntityManager;
 import org.company.app.database.manager.UserEntityManager;
 import org.company.app.util.BaseForm;
 import org.company.app.util.CustomTableModel;
+import org.company.app.util.Registry;
+
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -16,19 +19,76 @@ public class MainForm extends BaseForm {
     private JPanel MainPanel;
     private JButton ButtonSignIn;
     private JTable TableSchedule;
+    private JButton ButtonCreateSchedule;
+    private JButton ButtonSignUp;
+    private JButton ButtonLogOut;
+    private JButton ButtonCity;
+    private JButton ButtonTrain;
+    private JButton ButtonCar;
+    private JButton ButtonStation;
+    private JPanel PannelLoggedIn;
+    private JPanel PannelNotLoggedIn;
     private FormScheduleDetails formScheduleDetails;
+
     private final ScheduleEntityManager scheduleEntityManager = Application.getScheduleEntityManager();
+    private final Registry container =  Application.getContainer();
 
     private final String[] tableColumns = new String[] {
             "№", "Departure date", "Arrival date", "Train", "Departure station", "Destination station", "Train type"
     };
 
     public MainForm() {
-        setContentPane(MainPanel);
-        setVisible(true);
-
         initTable();
         initButtons();
+        initPanels();
+
+        setContentPane(MainPanel);
+        setVisible(true);
+    }
+
+    public void initPanels() {
+        hidePanelLoggedIn();
+    }
+
+    public void hideAdminButtons() {
+        ButtonCreateSchedule.setVisible(false);
+        ButtonCity.setVisible(false);
+        ButtonTrain.setVisible(false);
+        ButtonCar.setVisible(false);
+        ButtonStation.setVisible(false);
+    }
+
+    public void showAdminButtons() {
+        ButtonCreateSchedule.setVisible(true);
+        ButtonCity.setVisible(true);
+        ButtonTrain.setVisible(true);
+        ButtonCar.setVisible(true);
+        ButtonStation.setVisible(true);
+    }
+
+    public void hidePanelNotLoggedIn() {
+        PannelNotLoggedIn.setVisible(false);
+    }
+
+    public void showPanelLoggedIn() {
+        PannelLoggedIn.setVisible(true);
+
+        UserEntity userEntity = (UserEntity) container.get("user");
+        if (userEntity != null) {
+            if (userEntity.getAdmin()) {
+                showAdminButtons();
+            } else {
+                hideAdminButtons();
+            }
+        }
+    }
+
+    public void hidePanelLoggedIn() {
+        PannelLoggedIn.setVisible(false);
+    }
+
+    public void showPanelNotLoggedIn() {
+        PannelNotLoggedIn.setVisible(true);
     }
 
     private void initTable() {
@@ -59,13 +119,10 @@ public class MainForm extends BaseForm {
     }
 
     private void showFormScheduleDetails(JTable target) {
-        // to detect double click events
         setVisible(false);
-        int row = target.getSelectedRow(); // select a row
+        int row = target.getSelectedRow();
         FormScheduleDetails formScheduleDetails = new FormScheduleDetails(this);
         formScheduleDetails.init((Integer) TableSchedule.getModel().getValueAt(row, 0));
-//                    int column = target.getSelectedColumn(); // select a column
-//                    JOptionPane.showMessageDialog(null, TableSchedule.getValueAt(row, )); // get the value of a row and column.
     }
 
     private void initButtons() {
@@ -73,6 +130,31 @@ public class MainForm extends BaseForm {
             setVisible(false);
 
             new FormSignIn(this);
+        });
+
+        ButtonSignUp.addActionListener(e -> {
+            dispose();
+
+            new FormSignUp(this);
+        });
+
+        ButtonLogOut.addActionListener(e -> {
+            container.set("user", null);
+
+            hidePanelLoggedIn();
+            showPanelNotLoggedIn();
+        });
+
+        ButtonCity.addActionListener(e -> {
+            dispose();
+
+            new FormCity(this);
+        });
+
+        ButtonTrain.addActionListener(e -> {
+            dispose();
+
+            new FormTrain(this);
         });
     }
 

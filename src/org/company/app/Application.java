@@ -12,11 +12,13 @@ import java.sql.SQLException;
 public class Application {
     private static Application instance;
 
-    private static final MysqlDatabase database = new MysqlDatabase("my0.refracto.org", "gkozyrev_test", "gkozyrev", "IDBdq7iGAYAB");
+    private static final MysqlDatabase database = new MysqlDatabase("127.0.0.1", "rzd", "root", "Sokolov2015");
     private static final TrainEntityManager trainEntityManager = new TrainEntityManager(database);
     private static final StationEntityManager stationEntityManager = new StationEntityManager(database);
     private static final ScheduleEntityManager scheduleEntityManager = new ScheduleEntityManager(database);
     private static final UserEntityManager userEntityManager = new UserEntityManager(database);
+    private static final TrainTypeEntityManager trainTypeEntityManager = new TrainTypeEntityManager(database);
+    private static final CityEntityManager cityEntityManager = new CityEntityManager(database);
     private static final CarEntityManager carEntityManager = new CarEntityManager(database);
     private static final SeatEntityManager seatEntityManager = new SeatEntityManager(database);
 
@@ -52,6 +54,10 @@ public class Application {
         return userEntityManager;
     }
 
+    public static TrainTypeEntityManager getTrainTypeEntityManager() {
+        return trainTypeEntityManager;
+    }
+
     public static CarEntityManager getCarEntityManager() {
         return carEntityManager;
     }
@@ -62,5 +68,9 @@ public class Application {
 
     public static Registry getContainer() {
         return container;
+    }
+
+    public static CityEntityManager getCityEntityManager() {
+        return cityEntityManager;
     }
 }

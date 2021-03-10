@@ -5,6 +5,8 @@ public class StationEntity {
     private int cityId;
     private String name;
 
+    private String cityName;
+
     public StationEntity(int id, int cityId, String name) {
         this.id = id;
         this.cityId = cityId;
@@ -17,11 +19,7 @@ public class StationEntity {
 
     @Override
     public String toString() {
-        return "StationEntity{" +
-                "id=" + id +
-                ", cityId=" + cityId +
-                ", name='" + name + '\'' +
-                '}';
+        return cityName + " - " + name;
     }
 
     public int getId() {
@@ -46,5 +44,13 @@ public class StationEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }
