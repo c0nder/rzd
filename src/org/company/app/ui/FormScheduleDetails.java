@@ -93,6 +93,7 @@ public class FormScheduleDetails extends BaseSubForm<MainForm>  {
     }
 
     private void initSeatTable(int carID) {
+        this.carID = carID;
         tableSeats.getTableHeader().setReorderingAllowed(false);
         tableSeats.setRowHeight(28);
 
@@ -120,8 +121,13 @@ public class FormScheduleDetails extends BaseSubForm<MainForm>  {
     }
 
     private void selectSeat(JTable target) {
+        setVisible(false);
+
         int row = target.getSelectedRow(); // select a row
         this.seatID = (Integer) tableSeats.getModel().getValueAt(row, 0);
+
+        FormClientTicketBuy buyTicket = new FormClientTicketBuy(this);
+        buyTicket.init(this.scheduleID, this.carID, this.seatID, (Integer) tableSeats.getModel().getValueAt(row, 3));
     }
 
     @Override

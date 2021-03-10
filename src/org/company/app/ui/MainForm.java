@@ -119,11 +119,15 @@ public class MainForm extends BaseForm {
     }
 
     private void showFormScheduleDetails(JTable target) {
-        setVisible(false);
-        int row = target.getSelectedRow();
-        FormScheduleDetails formScheduleDetails = new FormScheduleDetails(this);
-        formScheduleDetails.init((Integer) TableSchedule.getModel().getValueAt(row, 0));
-    }
+
+        UserEntity userEntity = (UserEntity) container.get("user");
+        if (userEntity != null && !userEntity.getAdmin()) {
+                setVisible(false);
+                int row = target.getSelectedRow();
+                FormScheduleDetails formScheduleDetails = new FormScheduleDetails(this);
+                formScheduleDetails.init((Integer) TableSchedule.getModel().getValueAt(row, 0));
+            }
+        }
 
     private void initButtons() {
         ButtonSignIn.addActionListener(e -> {

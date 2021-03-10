@@ -24,7 +24,11 @@
             <constraints>
               <splitpane position="right"/>
             </constraints>
-            <properties/>
+            <properties>
+              <name value="Seat"/>
+              <requestFocusEnabled value="false"/>
+              <toolTipText value="Seat"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="1ed2d" class="javax.swing.JTable" binding="tableSeats">
@@ -37,7 +41,10 @@
             <constraints>
               <splitpane position="left"/>
             </constraints>
-            <properties/>
+            <properties>
+              <name value="Carriage"/>
+              <toolTipText value="Carriage"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="d6ce5" class="javax.swing.JTable" binding="tableCar">
