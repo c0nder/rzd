@@ -15,10 +15,7 @@ public class TrainTypeEntity {
 
     @Override
     public String toString() {
-        return "TrainTypeEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 
     public int getId() {

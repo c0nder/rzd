@@ -5,6 +5,8 @@ import org.company.app.database.entity.CityEntity;
 import org.company.app.util.MysqlDatabase;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CityEntityManager {
     private final MysqlDatabase database;
@@ -46,5 +48,24 @@ public class CityEntityManager {
         }
 
         return null;
+    }
+
+    public List<CityEntity> getAll() throws SQLException {
+        try(Connection connection = database.getConnection()) {
+            String sql = "SELECT * FROM city";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            List<CityEntity> cityEntities = new ArrayList<>();
+            while (resultSet.next()) {
+                cityEntities.add(new CityEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                ));
+            }
+
+            return cityEntities;
+        }
     }
 }

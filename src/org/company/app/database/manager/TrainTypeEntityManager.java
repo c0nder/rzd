@@ -4,6 +4,8 @@ import org.company.app.database.entity.TrainTypeEntity;
 import org.company.app.util.MysqlDatabase;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrainTypeEntityManager {
     private final MysqlDatabase database;
@@ -45,5 +47,24 @@ public class TrainTypeEntityManager {
         }
 
         return null;
+    }
+
+    public List<TrainTypeEntity> getAll() throws SQLException {
+        try(Connection connection = database.getConnection()) {
+            String sql = "SELECT * FROM train_type";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            List<TrainTypeEntity> trainTypes = new ArrayList<>();
+            while(resultSet.next()) {
+                trainTypes.add(new TrainTypeEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                ));
+            }
+
+            return trainTypes;
+        }
     }
 }

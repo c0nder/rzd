@@ -6,6 +6,10 @@ public class TrainEntity {
     private int destinationStationId;
     private int trainType;
 
+    private String departureStationName;
+    private String destinationStationName;
+    private String trainTypeName;
+
     public TrainEntity(int id, int departureStationId, int destinationStationId, int trainType) {
         this.id = id;
         this.departureStationId = departureStationId;
@@ -57,5 +61,29 @@ public class TrainEntity {
 
     public void setTrainType(int trainType) {
         this.trainType = trainType;
+    }
+
+    public String getDepartureStationName() {
+        return departureStationName;
+    }
+
+    public void setDepartureStationName(String departureStationName) {
+        this.departureStationName = departureStationName;
+    }
+
+    public String getDestinationStationName() {
+        return destinationStationName;
+    }
+
+    public void setDestinationStationName(String destinationStationName) {
+        this.destinationStationName = destinationStationName;
+    }
+
+    public String getTrainTypeName() {
+        return trainTypeName;
+    }
+
+    public void setTrainTypeName(String trainTypeName) {
+        this.trainTypeName = trainTypeName;
     }
 }
